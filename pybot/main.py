@@ -1,5 +1,6 @@
 import os
 import discord
+import requests
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -18,5 +19,12 @@ async def on_message(message):
 
     if message.content.startswith('$hello'):
         await message.channel.send('Howdy! :cowboy:')
+
+    if message.content.startswith('$money'):
+        r = requests.get('https://api.coinbase.com/v2/prices/BTC-USD/buy') \
+            .json().get('data')
+        await message.channel.send(
+            r.get('base') + " -> " + r.get('currency')
+            + " $" + r.get('amount'))
 
 client.run(os.getenv('TOKEN'))
