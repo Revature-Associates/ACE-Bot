@@ -32,16 +32,16 @@ async def on_message(message):
             eth.get('base') + " -> " + eth.get('currency')
             + " $" + eth.get('amount'))
 
-    if message.content.startswith('$buy-'):
-        symbol = message.content.split('-')
+    if message.content.startswith('$buy '):
+        symbol = message.content.split(' ')
         r = requests.get('https://api.coinbase.com/v2/prices/'+symbol[1]+'-USD/buy') \
             .json().get('data')
         await message.channel.send(
             r.get('base') + " -> " + r.get('currency')
             + " $" + r.get('amount'))
 
-    if message.content.startswith('$sell-'):
-        symbol = message.content.split('-')
+    if message.content.startswith('$sell '):
+        symbol = message.content.split(' ')
         r = requests.get('https://api.coinbase.com/v2/prices/'+symbol[1]+'-USD/sell') \
             .json().get('data')
         await message.channel.send(
