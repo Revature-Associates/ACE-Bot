@@ -18,15 +18,15 @@ async def money(ctx, *args):
         apiargs['base'] = args[0]
     
     elif(len(args) == 2):
-        apiargs['base'] = args[1]
-        apiargs['buyorsell'] = args[0]
+        apiargs['base'] = args[0]
+        apiargs['to'] = args[1]
 
     r = requests.get(apiurl.format(apiargs.get('base'), apiargs.get('to'), apiargs.get('buyorsell')))
 
     if(r.status_code == 200):
         r = r.json().get('data')
         await ctx.send(r.get('base') + " -> " + r.get('currency')
-                + " $" + r.get('amount'))
+              + " " + r.get('amount'))
 
     else:
         await ctx.send("You messed up dummy!")
